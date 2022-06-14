@@ -24,10 +24,10 @@ function openNav() {
  function refreshCamera() {
     if (abriu) openNav() // Fecha o menu se estiver aberto
 
-    const hash = window.location.hash.substring(1)
+    const camera = new URLSearchParams(window.location.search).get('camera')
     let cameraList = getLayamaCameras()
     cameraList.sort(function(x, y) { 
-        return x.a == hash ? -1 : y.a == hash ? 1 : 0 
+        return x.a == camera ? -1 : y.a == camera ? 1 : 0 
     })
     getLayamaCameras = function() { return cameraList }
 
@@ -41,6 +41,3 @@ function openNav() {
 }
 
 refreshCamera()
-window.addEventListener("hashchange", function() {
-    location.reload()
-})

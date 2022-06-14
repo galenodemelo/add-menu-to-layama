@@ -83,7 +83,7 @@ public class MenuBuilder {
 
             for (MenuConfigDTO.MenuConfigItem.MenuConfigItemSubItem subItem : item.subItemList) {
                 html.append("           <li>")
-                    .append("               <a href='#" + subItem.cameraName + "'>")
+                    .append("               <a href='?camera=" + subItem.cameraName + "'>")
                     .append(                    subItem.name)
                     .append("               </a>")
                     .append("           </li>");
