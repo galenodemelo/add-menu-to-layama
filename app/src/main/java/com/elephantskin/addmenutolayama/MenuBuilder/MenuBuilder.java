@@ -38,7 +38,7 @@ public class MenuBuilder {
     private void copyMenuModelFilesToProjectPath() throws IOException {
         System.out.println("> Copiando arquivos do modelo para o projeto...");
         
-        final File menuModelDir = new File("../menumodel");
+        final File menuModelDir = new File("../sources/menumodel");
         if (!menuModelDir.isDirectory()) throw new IOException("O diretório do modelo de menu não existe: " + menuModelDir.getAbsolutePath());
 
         File destinationDir = new File(projectPath + this.menuPathName);
