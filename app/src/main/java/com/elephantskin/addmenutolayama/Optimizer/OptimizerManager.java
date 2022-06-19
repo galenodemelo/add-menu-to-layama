@@ -31,6 +31,7 @@ public class OptimizerManager {
         removeJsFromHead();
         injectCompressedJs();
         injectPreloaders();
+        ImageOptimizerManager.optimize(this.projectPath);
         System.out.println("> Otimizações finalizadas...");
     }
 
