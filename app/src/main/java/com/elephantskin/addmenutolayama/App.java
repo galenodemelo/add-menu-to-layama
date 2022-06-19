@@ -5,6 +5,7 @@ import javax.swing.JFileChooser;
 import com.elephantskin.addmenutolayama.MenuBuilder.MenuBuilder;
 import com.elephantskin.addmenutolayama.MenuConfig.MenuConfigDTO;
 import com.elephantskin.addmenutolayama.MenuConfig.MenuConfigFileManager;
+import com.elephantskin.addmenutolayama.Optimizer.OptimizerManager;
 
 public class App {
 
@@ -17,6 +18,7 @@ public class App {
             askUserForProjectPath();
             MenuConfigDTO configDTO = new MenuConfigFileManager().getMenuConfig(projectPath);
             MenuBuilder.build(projectPath, configDTO);
+            OptimizerManager.optimize(projectPath);
         } catch (Exception exception) {
             exception.printStackTrace();
             System.out.println("> Ocorreram erros na execução do programa. Envie um print da tela para o desenvolvedor.");
