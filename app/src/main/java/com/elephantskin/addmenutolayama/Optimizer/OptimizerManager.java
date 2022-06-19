@@ -32,6 +32,7 @@ public class OptimizerManager {
         injectCompressedJs();
         injectPreloaders();
         ImageOptimizerManager.optimize(this.projectPath);
+        addCachePolicy();
         System.out.println("> Otimizações finalizadas...");
     }
 
@@ -108,5 +109,12 @@ public class OptimizerManager {
         }
 
         FileUtils.write(indexFile, indexFileManager.html(), StandardCharsets.UTF_8);
+    }
+
+    private void addCachePolicy() throws IOException {
+        System.out.println("> Adicionando cache policy...");
+
+        final File htAccessSource = new File("../sources/.htaccess");
+        FileUtils.copyFile(htAccessSource, new File(projectPath + ".htaccess"));
     }
 }
