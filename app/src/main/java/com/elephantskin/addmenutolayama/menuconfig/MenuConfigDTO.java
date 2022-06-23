@@ -1,4 +1,4 @@
-package com.elephantskin.addmenutolayama.MenuConfig;
+package com.elephantskin.addmenutolayama.menuconfig;
 
 import java.util.List;
 

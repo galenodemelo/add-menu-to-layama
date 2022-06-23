@@ -1,4 +1,4 @@
-package com.elephantskin.addmenutolayama.Optimizer;
+package com.elephantskin.addmenutolayama.optimizer;
 
 import java.io.File;
 import java.io.IOException;

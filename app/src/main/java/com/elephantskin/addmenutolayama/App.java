@@ -2,10 +2,10 @@ package com.elephantskin.addmenutolayama;
 
 import javax.swing.JFileChooser;
 
-import com.elephantskin.addmenutolayama.MenuBuilder.MenuBuilder;
-import com.elephantskin.addmenutolayama.MenuConfig.MenuConfigDTO;
-import com.elephantskin.addmenutolayama.MenuConfig.MenuConfigFileManager;
-import com.elephantskin.addmenutolayama.Optimizer.OptimizerManager;
+import com.elephantskin.addmenutolayama.menubuilder.MenuBuilder;
+import com.elephantskin.addmenutolayama.menuconfig.MenuConfigDTO;
+import com.elephantskin.addmenutolayama.menuconfig.MenuConfigFileManager;
+import com.elephantskin.addmenutolayama.optimizer.OptimizerManager;
 
 public class App {
 

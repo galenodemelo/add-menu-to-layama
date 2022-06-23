@@ -1,4 +1,4 @@
-package com.elephantskin.addmenutolayama.MenuBuilder;
+package com.elephantskin.addmenutolayama.menubuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.elephantskin.addmenutolayama.MenuConfig.MenuConfigDTO;
+import com.elephantskin.addmenutolayama.menuconfig.MenuConfigDTO;
 
 public class MenuBuilder {
     
