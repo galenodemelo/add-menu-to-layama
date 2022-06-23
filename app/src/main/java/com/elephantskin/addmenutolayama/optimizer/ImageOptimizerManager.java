@@ -1,5 +1,6 @@
 package com.elephantskin.addmenutolayama.optimizer;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,24 +16,24 @@ import javax.imageio.ImageIO;
 public class ImageOptimizerManager {
 
     private final String imagePath;
+    private final Integer[] sizeToResizeList = {1680, 1440};
     
     private ImageOptimizerManager(String projectPath) {
         this.imagePath = projectPath + "jpg/base/";
     }
     
     public static void optimize(String projectPath) throws InterruptedException {
-        new ImageOptimizerManager(projectPath).optimize();
-    }
-
-    private void optimize() throws InterruptedException {
         System.out.println("> Iniciando otimização de imagens...");
-        processImageConversion();
+
+        new ImageOptimizerManager(projectPath).processImageOptimization();
     }
 
-    private void processImageConversion() throws InterruptedException {
+    public void processImageOptimization() throws InterruptedException {
         final Integer chunkSize = 50;
         AtomicInteger counter = new AtomicInteger(0);
         
+        createDirectoriesIfNecessary();
+
         List<File> fileList = listImages();
         final Collection<List<File>> chunkedList = fileList
             .stream()
@@ -44,6 +45,7 @@ public class ImageOptimizerManager {
                 for (File file : chunk) {
                     try {
                         File webpImage = convertToWebp(file);
+                        resize(webpImage);
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println("Erro ao converter imagem: " + file.getName());
@@ -52,6 +54,17 @@ public class ImageOptimizerManager {
             });
             thread.start();
             thread.join();
+        }
+    }
+
+    private void createDirectoriesIfNecessary() {
+        for (Integer size : this.sizeToResizeList) {
+            String path = this.imagePath + size;
+            File dir = new File(path);
+            if (dir.exists()) continue;
+            
+            System.out.println("> > Criando diretório " + path);
+            dir.mkdirs();
         }
     }
 
@@ -68,7 +81,10 @@ public class ImageOptimizerManager {
 
     private File convertToWebp(File image) throws IOException {
         File webpImage = new File(image.getAbsolutePath().replace(".jpg", ".webp"));
-        if (webpImage.exists()) return webpImage;
+        if (webpImage.exists()) {
+            System.out.println("> > Imagem " + image.getAbsolutePath() + " já existe");
+            return webpImage;
+        }
         
         System.out.println("> > Convertendo imagem " + image.getAbsolutePath() + " para webp...");
         BufferedImage bufferedImage = ImageIO.read(image);
@@ -77,6 +93,28 @@ public class ImageOptimizerManager {
         return webpImage;
     }
 
-        return webpImage;
+    private void resize(File image) throws IOException {
+        for (Integer size : this.sizeToResizeList) {
+            final String fullpath = this.imagePath + size + "/" + image.getName();
+            File resizedImage = new File(fullpath);
+            if (resizedImage.exists()) {
+                System.out.println("> > Imagem " + image.getAbsolutePath() + " já redimensionada para " + size + "px");
+                continue;
+            }
+            
+            System.out.println("> > Redimensionando imagem " + image.getAbsolutePath() + " para " + size + "px");
+            resizedImage.mkdir();
+            BufferedImage output1to1 = resizeAspect1to1(image, size);
+            ImageIO.write(output1to1, "webp", resizedImage);
+        }
+    }
+
+    private BufferedImage resizeAspect1to1(File image, Integer size) throws IOException {
+        BufferedImage originalImage = ImageIO.read(image);
+        Image resultingImage = originalImage.getScaledInstance(size, size, Image.SCALE_DEFAULT);
+        BufferedImage outputImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+        outputImage.getGraphics().drawImage(resultingImage, 0, 0, null);
+
+        return outputImage;
     }
 }
