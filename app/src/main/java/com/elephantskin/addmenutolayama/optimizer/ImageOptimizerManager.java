@@ -66,13 +66,16 @@ public class ImageOptimizerManager {
         return fileList;
     }
 
-    private static File convertToWebp(File image) throws IOException {
+    private File convertToWebp(File image) throws IOException {
         File webpImage = new File(image.getAbsolutePath().replace(".jpg", ".webp"));
-        if (!webpImage.exists()) {
-            System.out.println("> > Convertendo imagem " + image.getAbsolutePath() + " para webp...");
-            BufferedImage bufferedImage = ImageIO.read(image);
-            ImageIO.write(bufferedImage, "webp", webpImage);
-        }
+        if (webpImage.exists()) return webpImage;
+        
+        System.out.println("> > Convertendo imagem " + image.getAbsolutePath() + " para webp...");
+        BufferedImage bufferedImage = ImageIO.read(image);
+        ImageIO.write(bufferedImage, "webp", webpImage);
+
+        return webpImage;
+    }
 
         return webpImage;
     }
