@@ -24,15 +24,6 @@ public class ImageOptimizerManager {
         new ImageOptimizerManager(imagePath).optimize();
     }
 
-    public static void convertToWebp(File image) throws IOException {
-        File webpImage = new File(image.getAbsolutePath().replace(".jpg", ".webp"));
-        if (!webpImage.exists()) {
-            System.out.println("> > Convertendo imagem " + image.getAbsolutePath() + " para webp...");
-            BufferedImage bufferedImage = ImageIO.read(image);
-            ImageIO.write(bufferedImage, "webp", webpImage);
-        }
-    }
-
     private void optimize() throws InterruptedException {
         System.out.println("> Iniciando otimização de imagens...");
         processImageConversion();
@@ -52,7 +43,7 @@ public class ImageOptimizerManager {
             Thread thread = new Thread(() -> {
                 for (File file : chunk) {
                     try {
-                        convertToWebp(file);
+                        File webpImage = convertToWebp(file);
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.out.println("Erro ao converter imagem: " + file.getName());
@@ -73,5 +64,16 @@ public class ImageOptimizerManager {
         fileList.addAll(Arrays.asList(directory2048.listFiles((File dir, String name) -> name.endsWith(".jpg"))));
 
         return fileList;
+    }
+
+    private static File convertToWebp(File image) throws IOException {
+        File webpImage = new File(image.getAbsolutePath().replace(".jpg", ".webp"));
+        if (!webpImage.exists()) {
+            System.out.println("> > Convertendo imagem " + image.getAbsolutePath() + " para webp...");
+            BufferedImage bufferedImage = ImageIO.read(image);
+            ImageIO.write(bufferedImage, "webp", webpImage);
+        }
+
+        return webpImage;
     }
 }
