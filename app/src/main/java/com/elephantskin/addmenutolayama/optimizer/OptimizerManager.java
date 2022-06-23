@@ -102,8 +102,8 @@ public class OptimizerManager {
         Element headElement = indexFileManager.getElementsByTag("head").first();
         headElement.append("<link rel=\"preload\" href=\"./bjs/" + this.compressedJsFilename + "\" as=\"script\" />");
 
-        List<String> fontNameList = Arrays.asList("subset-Etna.woff2", "font/subset-Etna.woff",
-                "font/subset-AauxProMedium.woff2", "font/subset-AauxProMedium.woff");
+        List<String> fontNameList = Arrays.asList("subset-Etna.woff2", "subset-Etna.woff",
+                "subset-AauxProMedium.woff2", "subset-AauxProMedium.woff");
         for (String fontName : fontNameList) {
             headElement.append("<link rel=\"preload\" href=\"./menu/font/" + fontName + "\" as=\"font\" />");
         }
