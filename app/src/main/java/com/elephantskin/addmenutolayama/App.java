@@ -1,5 +1,9 @@
 package com.elephantskin.addmenutolayama;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFileChooser;
 
 import com.elephantskin.addmenutolayama.menubuilder.MenuBuilder;
@@ -9,16 +13,20 @@ import com.elephantskin.addmenutolayama.optimizer.OptimizerManager;
 
 public class App {
 
-    private static String projectPath;
+    private static List<String> projectPathList = new ArrayList<String>();
 
     public static void main(String[] args) {
         try {
             System.out.println("==== INICIALIZANDO ====");
             
             askUserForProjectPath();
-            MenuConfigDTO configDTO = new MenuConfigFileManager().getMenuConfig(projectPath);
-            MenuBuilder.build(projectPath, configDTO);
-            OptimizerManager.optimize(projectPath);
+            for (String projectPath : App.projectPathList) {
+                System.out.println("||| Processando projeto " + projectPath + " |||");
+                MenuConfigDTO configDTO = new MenuConfigFileManager().getMenuConfig(projectPath);
+                MenuBuilder.build(projectPath, configDTO);
+                OptimizerManager.optimize(projectPath);
+                System.out.println("||| Projeto " + projectPath + " finalizado |||");
+            }
         } catch (Exception exception) {
             exception.printStackTrace();
             System.out.println("> Ocorreram erros na execução do programa. Envie um print da tela para o desenvolvedor.");
@@ -32,12 +40,17 @@ public class App {
         Thread.sleep(1000);
 
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(true);
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         Integer opt = fileChooser.showOpenDialog(null);
         if (opt == JFileChooser.APPROVE_OPTION) {
-            projectPath = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!projectPath.endsWith("/")) projectPath += "/";
-            System.out.println("> Caminho selecionado: " + projectPath);
+            for (File file : fileChooser.getSelectedFiles()) {
+                String absolutePath = file.getAbsolutePath();
+                if (!absolutePath.endsWith("/")) absolutePath += "/";
+                
+                App.projectPathList.add(absolutePath);
+                System.out.println("> Caminho selecionado: " + absolutePath);
+            }
         } else {
             System.out.println("O usuário não selecionou nenhum diretório.");
             System.exit(1);
