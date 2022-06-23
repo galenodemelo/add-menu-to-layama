@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 public class ImageOptimizerManager {
-    
-    private String projectPath;
 
+    private final String imagePath;
+    
     private ImageOptimizerManager(String projectPath) {
-        this.projectPath = projectPath;
+        this.imagePath = projectPath + "jpg/base/";
     }
     
-    public static void optimize(String imagePath) throws InterruptedException {
-        new ImageOptimizerManager(imagePath).optimize();
+    public static void optimize(String projectPath) throws InterruptedException {
+        new ImageOptimizerManager(projectPath).optimize();
     }
 
     private void optimize() throws InterruptedException {
@@ -58,8 +58,8 @@ public class ImageOptimizerManager {
     private List<File> listImages() {
         List<File> fileList = new ArrayList<File>();
 
-        File directory1024 = new File(projectPath + "jpg/base/1024");
-        File directory2048 = new File(projectPath + "jpg/base/2048");
+        File directory1024 = new File(this.imagePath + "1024");
+        File directory2048 = new File(this.imagePath + "2048");
         fileList.addAll(Arrays.asList(directory1024.listFiles((File dir, String name) -> name.endsWith(".jpg"))));
         fileList.addAll(Arrays.asList(directory2048.listFiles((File dir, String name) -> name.endsWith(".jpg"))));
 
