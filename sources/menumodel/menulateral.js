@@ -17,27 +17,3 @@ function openNav() {
         abriu = false
     }
 }
-
-/**
- * Altera a câmera ao clicar no botão do menu
- */
- function refreshCamera() {
-    if (abriu) openNav() // Fecha o menu se estiver aberto
-
-    const camera = new URLSearchParams(window.location.search).get('camera')
-    let cameraList = getLayamaCameras()
-    cameraList.sort(function(x, y) { 
-        return x.a == camera ? -1 : y.a == camera ? 1 : 0 
-    })
-    getLayamaCameras = function() { return cameraList }
-
-    const scriptList = document.getElementsByTagName("script")
-    for (let script of scriptList) {
-        if (script.src.includes("menulateral.js")) continue
-        if (!script.src.length) continue
-
-        script.src = script.src.replace(/\?.*$/, "") + "?t=" + new Date().getTime()
-    }
-}
-
-refreshCamera()

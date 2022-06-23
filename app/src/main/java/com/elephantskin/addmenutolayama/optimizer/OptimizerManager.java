@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 public class OptimizerManager {
 
     private final String compressedJsFilename = "compressed.js";
+    private final String layamaCustomJsFilename = "layama.custom.js";
     private String projectPath;
 
     private OptimizerManager(String projectPath) {
@@ -29,7 +30,7 @@ public class OptimizerManager {
         System.out.println("> Iniciando otimização...");
         removeBootstrapCss();
         removeJsFromHead();
-        injectCompressedJs();
+        injectNecessaryJs();
         injectPreloaders();
         ImageOptimizerManager.optimize(this.projectPath);
         addCachePolicy();
@@ -57,14 +58,31 @@ public class OptimizerManager {
         String indexHtmlContent = FileUtils.readFileToString(indexFile, StandardCharsets.UTF_8);
 
         Document indexFileManager = Jsoup.parse(indexHtmlContent);
-        Elements jsScriptInjectionList = indexFileManager.getElementsByAttributeValueStarting("src", "./bjs");
+        Elements jsScriptInjectionList = indexFileManager.getElementsByTag("head").first()
+            .getElementsByAttributeValueStarting("src", "./");
         if (!jsScriptInjectionList.isEmpty())
             jsScriptInjectionList.remove();
 
         FileUtils.write(indexFile, indexFileManager.html(), StandardCharsets.UTF_8);
     }
 
-    private void injectCompressedJs() throws IOException {
+    private void injectNecessaryJs() throws IOException {
+        File indexFile = new File(projectPath + "index.html");
+        String indexHtmlContent = FileUtils.readFileToString(indexFile, StandardCharsets.UTF_8);
+
+        Document indexFileManager = Jsoup.parse(indexHtmlContent);
+        Element canvasElement = indexFileManager.getElementById("canvasZone");
+        if (canvasElement == null)
+            throw new IOException("O elemento canvasZone não existe no arquivo index.html");
+
+        injectCompressedJsFile(canvasElement);
+        reinjectLayamaSceneJsFile(canvasElement);
+        injectLayamaCustomJsFile(canvasElement);
+
+        FileUtils.write(indexFile, indexFileManager.html(), StandardCharsets.UTF_8);
+    }
+
+    private void injectCompressedJsFile(Element element) throws IOException {
         System.out.println("> Injetando JS comprimido...");
 
         final File compressedJsFile = new File("../sources/" + this.compressedJsFilename);
@@ -74,18 +92,32 @@ public class OptimizerManager {
         File destination = new File(projectPath + "bjs/" + this.compressedJsFilename);
         FileUtils.copyFile(compressedJsFile, destination);
 
-        File indexFile = new File(projectPath + "index.html");
-        String indexHtmlContent = FileUtils.readFileToString(indexFile, StandardCharsets.UTF_8);
-
-        Document indexFileManager = Jsoup.parse(indexHtmlContent);
-        Element canvasElement = indexFileManager.getElementById("canvasZone");
-        if (canvasElement == null)
-            throw new IOException("O elemento canvasZone não existe no arquivo index.html");
-
         String compressedJsFilepath = "./bjs/" + this.compressedJsFilename;
-        canvasElement.append("<script src=\"" + compressedJsFilepath + "\"></script>");
+        element.getElementsByAttributeValue("src", compressedJsFilepath).first().remove();
+        element.append("<script src=\"" + compressedJsFilepath + "\"></script>");
+    }
 
-        FileUtils.write(indexFile, indexFileManager.html(), StandardCharsets.UTF_8);
+    private void reinjectLayamaSceneJsFile(Element element) {
+        System.out.println("> Reinjetando layama.scene.js...");
+
+        String layamaSceneFilepath = "./layama.scene.js";
+        element.getElementsByAttributeValue("src", layamaSceneFilepath).first().remove();
+        element.append("<script src=\"" + layamaSceneFilepath + "\"></script>");
+    }
+
+    private void injectLayamaCustomJsFile(Element element) throws IOException {
+        System.out.println("> Injetando funções que sobrepõe o Layama...");
+
+        final File layamaCustomJsFile = new File("../sources/" + this.layamaCustomJsFilename);
+        if (!layamaCustomJsFile.exists())
+            throw new IOException("O arquivo customizado do Layama não existe: " + layamaCustomJsFile.getAbsolutePath());
+
+        File destination = new File(projectPath + "bjs/" + this.layamaCustomJsFilename);
+        FileUtils.copyFile(layamaCustomJsFile, destination);
+
+        String layamaCustomJsFilepath = "./bjs/" + this.layamaCustomJsFilename;
+        element.getElementsByAttributeValue("src", layamaCustomJsFilepath).first().remove();
+        element.append("<script src=\"" + layamaCustomJsFilepath + "\"></script>");
     }
 
     private void injectPreloaders() throws IOException {
