@@ -82,7 +82,7 @@ public class ImageOptimizerManager {
     private File convertToWebp(File image) throws IOException {
         File webpImage = new File(image.getAbsolutePath().replace(".jpg", ".webp"));
         if (webpImage.exists()) {
-            System.out.println("> > Imagem " + image.getAbsolutePath() + " já existe");
+            System.out.println("> > Imagem " + image.getAbsolutePath() + " já existe. Ignorando...");
             return webpImage;
         }
         
