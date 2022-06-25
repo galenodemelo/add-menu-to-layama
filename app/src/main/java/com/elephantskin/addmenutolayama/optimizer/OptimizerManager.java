@@ -59,7 +59,7 @@ public class OptimizerManager {
 
         Document indexFileManager = Jsoup.parse(indexHtmlContent);
         Elements jsScriptInjectionList = indexFileManager.getElementsByTag("head").first()
-            .getElementsByAttributeValueStarting("src", "./");
+                .getElementsByAttributeValueStarting("src", "./");
         if (!jsScriptInjectionList.isEmpty())
             jsScriptInjectionList.remove();
 
@@ -102,7 +102,8 @@ public class OptimizerManager {
 
         String layamaSceneFilepath = "./layama.scene.js";
         Elements layamaInjectionElement = element.getElementsByAttributeValue("src", layamaSceneFilepath);
-        if (!layamaInjectionElement.isEmpty()) layamaInjectionElement.first().remove();
+        if (!layamaInjectionElement.isEmpty())
+            layamaInjectionElement.first().remove();
 
         element.append("<script src=\"" + layamaSceneFilepath + "\"></script>");
     }
@@ -112,13 +113,17 @@ public class OptimizerManager {
 
         final File layamaCustomJsFile = new File("../sources/" + this.layamaCustomJsFilename);
         if (!layamaCustomJsFile.exists())
-            throw new IOException("O arquivo customizado do Layama não existe: " + layamaCustomJsFile.getAbsolutePath());
+            throw new IOException(
+                    "O arquivo customizado do Layama não existe: " + layamaCustomJsFile.getAbsolutePath());
 
         File destination = new File(projectPath + "bjs/" + this.layamaCustomJsFilename);
         FileUtils.copyFile(layamaCustomJsFile, destination);
 
         String layamaCustomJsFilepath = "./bjs/" + this.layamaCustomJsFilename;
-        element.getElementsByAttributeValue("src", layamaCustomJsFilepath).first().remove();
+        Elements layamaCustomInjectionElement = element.getElementsByAttributeValue("src", layamaCustomJsFilepath);
+        if (!layamaCustomInjectionElement.isEmpty())
+            layamaCustomInjectionElement.first().remove();
+
         element.append("<script src=\"" + layamaCustomJsFilepath + "\"></script>");
     }
 
