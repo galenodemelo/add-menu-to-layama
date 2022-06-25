@@ -101,7 +101,9 @@ public class OptimizerManager {
         System.out.println("> Reinjetando layama.scene.js...");
 
         String layamaSceneFilepath = "./layama.scene.js";
-        element.getElementsByAttributeValue("src", layamaSceneFilepath).first().remove();
+        Elements layamaInjectionElement = element.getElementsByAttributeValue("src", layamaSceneFilepath);
+        if (!layamaInjectionElement.isEmpty()) layamaInjectionElement.first().remove();
+
         element.append("<script src=\"" + layamaSceneFilepath + "\"></script>");
     }
 
