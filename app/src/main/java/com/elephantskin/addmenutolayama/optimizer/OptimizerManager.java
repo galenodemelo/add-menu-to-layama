@@ -93,7 +93,9 @@ public class OptimizerManager {
         FileUtils.copyFile(compressedJsFile, destination);
 
         String compressedJsFilepath = "./bjs/" + this.compressedJsFilename;
-        element.getElementsByAttributeValue("src", compressedJsFilepath).first().remove();
+        Elements compressedJsInjection = element.getElementsByAttributeValue("src", compressedJsFilepath);
+        if (!compressedJsInjection.isEmpty())
+            compressedJsInjection.first().remove();
         element.append("<script src=\"" + compressedJsFilepath + "\"></script>");
     }
 
