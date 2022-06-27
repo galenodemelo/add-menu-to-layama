@@ -13,12 +13,15 @@ import com.elephantskin.addmenutolayama.optimizer.OptimizerManager;
 
 public class App {
 
+    public static String jarLocation;
+
     private static List<String> projectPathList = new ArrayList<String>();
 
     public static void main(String[] args) {
         try {
             System.out.println("==== INICIALIZANDO ====");
-            
+            jarLocation = new File(App.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
+
             askUserForProjectPath();
             for (String projectPath : App.projectPathList) {
                 System.out.println("||| Processando projeto " + projectPath + " |||");

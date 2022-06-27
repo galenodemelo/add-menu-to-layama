@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.elephantskin.addmenutolayama.App;
 import com.elephantskin.addmenutolayama.menuconfig.MenuConfigDTO;
 
 public class MenuBuilder {
@@ -38,7 +39,7 @@ public class MenuBuilder {
     private void copyMenuModelFilesToProjectPath() throws IOException {
         System.out.println("> Copiando arquivos do modelo para o projeto...");
         
-        final File menuModelDir = new File("../sources/menumodel");
+        final File menuModelDir = new File(App.jarLocation + "/sources/menumodel");
         if (!menuModelDir.isDirectory()) throw new IOException("O diretório do modelo de menu não existe: " + menuModelDir.getAbsolutePath());
 
         File destinationDir = new File(projectPath + this.menuPathName);

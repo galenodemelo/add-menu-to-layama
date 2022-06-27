@@ -12,6 +12,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.elephantskin.addmenutolayama.App;
+
 public class OptimizerManager {
 
     private final String compressedJsFilename = "compressed.js";
@@ -85,7 +87,7 @@ public class OptimizerManager {
     private void injectCompressedJsFile(Element element) throws IOException {
         System.out.println("> Injetando JS comprimido...");
 
-        final File compressedJsFile = new File("../sources/" + this.compressedJsFilename);
+        final File compressedJsFile = new File(App.jarLocation + "/sources/" + this.compressedJsFilename);
         if (!compressedJsFile.exists())
             throw new IOException("O arquivo JS comprimido não existe: " + compressedJsFile.getAbsolutePath());
 
@@ -113,7 +115,7 @@ public class OptimizerManager {
     private void injectLayamaCustomJsFile(Element element) throws IOException {
         System.out.println("> Injetando funções que sobrepõe o Layama...");
 
-        final File layamaCustomJsFile = new File("../sources/" + this.layamaCustomJsFilename);
+        final File layamaCustomJsFile = new File(App.jarLocation + "/sources/" + this.layamaCustomJsFilename);
         if (!layamaCustomJsFile.exists())
             throw new IOException(
                     "O arquivo customizado do Layama não existe: " + layamaCustomJsFile.getAbsolutePath());
@@ -155,7 +157,7 @@ public class OptimizerManager {
     private void addCachePolicy() throws IOException {
         System.out.println("> Adicionando cache policy...");
 
-        final File htAccessSource = new File("../sources/.htaccess");
+        final File htAccessSource = new File(App.jarLocation + "/sources/.htaccess");
         FileUtils.copyFile(htAccessSource, new File(projectPath + ".htaccess"));
     }
 }
