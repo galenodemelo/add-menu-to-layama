@@ -12,6 +12,7 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -34,4 +35,10 @@ application {
 
 run {
     standardInput = System.in
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.elephantskin.addmenutolayama.App'
+    }
 }
