@@ -1,8 +1,8 @@
 @font-face {
     font-family: 'Etna';
     src: local('Etna'),
-        url('subset-Etna.woff2') format('woff2'),
-        url('subset-Etna.woff') format('woff');
+        url('font/subset-Etna.woff2') format('woff2'),
+        url('font/subset-Etna.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -11,8 +11,8 @@
 @font-face {
     font-family: 'Aaux ProMedium';
     src: local('Aaux ProMedium'), local('AauxProMedium'),
-        url('subset-AauxProMedium.woff2') format('woff2'),
-        url('subset-AauxProMedium.woff') format('woff');
+        url('font/subset-AauxProMedium.woff2') format('woff2'),
+        url('font/subset-AauxProMedium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -41,7 +41,7 @@
 	display: block;
 	transition: 0.3s;
 	text-align: right;
-	font-family: 'etna-free', sans-serif;
+	font-family: 'Etna', sans-serif;
 	font-weight: 400;
 	letter-spacing: 1px;
 	padding: 0px;
