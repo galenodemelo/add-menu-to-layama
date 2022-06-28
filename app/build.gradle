@@ -42,7 +42,12 @@ task copySources(type: Copy) {
     into "$buildDir/libs/sources"
 }
 
-task runJar(type: Jar, dependsOn: "copySources") {
+task copyExecutables(type: Copy) {
+    from "$rootDir/executable"
+    into "$buildDir/libs"
+}
+
+task runJar(type: Jar, dependsOn: ["copySources", "copyExecutables"]) {
     def jarName = "AddMenuToLayama"
 
     manifest {
