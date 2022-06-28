@@ -1,2 +1,2 @@
-CALL java -jar "AddMenuToLayama.jar"
+CALL java -jar "AddMenuToLayama-all.jar"
 PAUSE

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-java -jar AddMenuToLayama.jar
+java -jar AddMenuToLayama-all.jar
 read -p "Aperte [Enter] para fechar o terminal..."
