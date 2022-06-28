@@ -68,13 +68,16 @@
     height: fit-content;
 }
 
-#tdmenu {
+.tdmenu {
 	padding: 0px;
 	float: right;
 	width: 320px;
 	height: inherit;
 	white-space: nowrap;
 	text-align: right;
+}
+
+.tdmenu.with-watermark {
 	background-image: url(img/allRightsReserved.svg);
 	background-repeat: no-repeat;
 	background-position: center bottom 15px;

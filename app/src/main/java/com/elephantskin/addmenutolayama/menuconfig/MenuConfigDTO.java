@@ -6,6 +6,8 @@ import javax.annotation.Nullable;
 
 public class MenuConfigDTO {
     
+    public Boolean watermark = true;
+
     public List<MenuConfigItem> itemList;
 
     public static class MenuConfigItem {

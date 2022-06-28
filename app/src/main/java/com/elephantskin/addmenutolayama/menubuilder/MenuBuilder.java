@@ -3,6 +3,8 @@ package com.elephantskin.addmenutolayama.menubuilder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
@@ -72,8 +74,12 @@ public class MenuBuilder {
     }
 
     private String buildMenuHtml() {
+        List<String> menuClassList = new ArrayList<String>();
+        menuClassList.add("tdmenu");
+        if (this.configDTO.watermark) menuClassList.add("with-watermark");
+
         StringBuilder html = new StringBuilder()
-            .append("<div id='tdmenu'>")
+            .append("<div class='" + String.join(" ", menuClassList) + "'>")
             .append("   <nav class='navbar'>")
             .append("       <ul>");
         
