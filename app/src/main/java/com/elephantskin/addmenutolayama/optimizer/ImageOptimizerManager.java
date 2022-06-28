@@ -75,8 +75,8 @@ public class ImageOptimizerManager {
 
         File directory1024 = new File(this.imagePath + "1024");
         File directory2048 = new File(this.imagePath + "2048");
-        fileList.addAll(Arrays.asList(directory1024.listFiles((File dir, String name) -> name.endsWith(".jpg"))));
-        fileList.addAll(Arrays.asList(directory2048.listFiles((File dir, String name) -> name.endsWith(".jpg"))));
+        fileList.addAll(Arrays.asList(directory1024.listFiles((File dir, String name) -> !name.endsWith(".webp"))));
+        fileList.addAll(Arrays.asList(directory2048.listFiles((File dir, String name) -> !name.endsWith(".webp"))));
 
         return fileList;
     }
