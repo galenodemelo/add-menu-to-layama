@@ -12,6 +12,9 @@ public class MenuConfigDTO {
         
         public String name;
 
+        @Nullable
+        public String url;
+
         public List<MenuConfigItemSubItem> subItemList;
 
         public static class MenuConfigItemSubItem {
@@ -20,9 +23,6 @@ public class MenuConfigDTO {
 
             @Nullable
             public String cameraName;
-
-            @Nullable
-            public String url;
         }
     }
 }

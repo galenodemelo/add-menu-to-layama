@@ -83,7 +83,9 @@ public class MenuBuilder {
                 .append("           <ul id='list'>");
 
             for (MenuConfigDTO.MenuConfigItem.MenuConfigItemSubItem subItem : item.subItemList) {
-                String link = subItem.cameraName != null ? "?camera=" + subItem.cameraName : subItem.url;
+                String link = "";
+                if (item.url != null) link += item.url;
+                if (subItem.cameraName != null) link += "?camera=" + subItem.cameraName;
 
                 html.append("           <li>")
                     .append("               <a href='"+ link + "'>")
