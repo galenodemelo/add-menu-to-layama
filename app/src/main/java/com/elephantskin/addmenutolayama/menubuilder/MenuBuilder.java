@@ -58,9 +58,9 @@ public class MenuBuilder {
         String cssAndJs = buildCssAndJs();
 
         this.html = "<div id='" + this.menuHtmlIdValue + "'>" 
+                        + cssAndJs 
                         + menuButtonHtml 
                         + menuHtml 
-                        + cssAndJs 
                   + "</div>";
     }
 
