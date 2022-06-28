@@ -45,6 +45,8 @@ public class ImageOptimizerManager {
                 for (File file : chunk) {
                     try {
                         File webpImage = convertToWebp(file);
+                        if (webpImage.getAbsolutePath().contains("1024")) continue;
+                        
                         resize(webpImage);
                     } catch (Exception e) {
                         e.printStackTrace();
