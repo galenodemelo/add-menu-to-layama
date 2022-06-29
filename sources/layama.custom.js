@@ -30,5 +30,7 @@ getLayamaResolutions = function() {
         }
     }
 
+    if (layamaResolutions.length < 2) layamaResolutions.push(resolutionList[resolutionList.length - 1])
+
     return layamaResolutions 
 }
