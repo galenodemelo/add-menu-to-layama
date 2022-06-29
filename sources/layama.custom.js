@@ -22,14 +22,13 @@ getLayamaResolutions = function() {
     const windowWidth = window.innerWidth
 
     const layamaResolutions = new BABYLON.SmartArray(0);
+    layamaResolutions.push(1024) // O Babylon sempre seleciona o segundo item do array, então o primeiro é apenas mock
     for (resolution of resolutionList) {
-        if (resolution > windowWidth) {
-            layamaResolutions.push(resolution)
-            return layamaResolutions
+        if (resolution >= windowWidth) {
+            layamaResolutions.push(resolution.toString())
+            break
         }
     }
-
-    layamaResolutions.push(resolutionList[resolutionList.length - 1])
 
     return layamaResolutions 
 }
