@@ -85,7 +85,7 @@ public class MenuBuilder {
         
         for (MenuConfigDTO.MenuConfigItem item : this.configDTO.itemList) {
             html.append("       <li class='itemmenu'>")
-                .append("           <a href='javascript: void();'>" + item.name + "</a>")
+                .append("           <button class='bto-accordion'>" + item.name + "</button>")
                 .append("           <ul id='list'>");
 
             for (MenuConfigDTO.MenuConfigItem.MenuConfigItemSubItem subItem : item.subItemList) {
