@@ -134,7 +134,6 @@ li.itemmenu {
 
 #list {
 	max-height: 0px;
-	overflow: hidden;
 	transition: 0.6s ease;
 	text-align: right;
 	padding: 0px;
@@ -142,6 +141,10 @@ li.itemmenu {
     display: inline-flex;
     flex-direction: column;
     gap: 16px 0;
+    margin-right: -8px;
+    padding-right: 8px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 li.itemmenu.opened #list {
@@ -149,7 +152,11 @@ li.itemmenu.opened #list {
 }
 
 #list li {
-    margin: 6px 0;
+    margin-top: 12px;
+}
+
+#list li:last-of-type {
+    margin-bottom: 12px;
 }
 
 #list a {
