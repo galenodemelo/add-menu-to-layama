@@ -89,12 +89,14 @@
 	background-repeat: no-repeat;
 	background-position: center bottom 15px;
 	background-size: 268px 30px;
+    min-width: 320px;
 }
 
 .navbar {
     display: block;
     z-index: 9999;
     padding: 0 24px;
+    width: 100%;
 }
 
 .navbar > ul {
