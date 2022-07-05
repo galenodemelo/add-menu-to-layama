@@ -85,7 +85,7 @@ public class MenuBuilder {
         
         List<String> itemMenuClassList = new ArrayList<String>();
         itemMenuClassList.add("itemmenu");
-        if (this.configDTO.opened) menuClassList.add("opened");
+        if (this.configDTO.opened) itemMenuClassList.add("opened");
 
         final String itemMenuClasses = String.join(" ", itemMenuClassList);
         for (MenuConfigDTO.MenuConfigItem item : this.configDTO.itemList) {
