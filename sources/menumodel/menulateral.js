@@ -21,10 +21,6 @@ function openNav() {
 document.querySelectorAll(".bto-accordion").forEach((item) => {
     item.addEventListener("click", () => {
         const parentElement = item.parentElement
-        parentElement.parentElement.querySelectorAll(":scope > .opened").forEach((sibling) => {
-            if (sibling == parentElement) return
-            sibling.classList.remove("opened")
-        })
         parentElement.classList.toggle("opened")
     })
 })
