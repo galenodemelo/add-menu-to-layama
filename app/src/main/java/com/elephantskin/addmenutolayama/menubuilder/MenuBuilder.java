@@ -83,8 +83,13 @@ public class MenuBuilder {
             .append("   <nav class='navbar'>")
             .append("       <ul>");
         
+        List<String> itemMenuClassList = new ArrayList<String>();
+        itemMenuClassList.add("itemmenu");
+        if (this.configDTO.opened) menuClassList.add("opened");
+
+        final String itemMenuClasses = String.join(" ", itemMenuClassList);
         for (MenuConfigDTO.MenuConfigItem item : this.configDTO.itemList) {
-            html.append("       <li class='itemmenu'>")
+            html.append("       <li class='" + itemMenuClasses + "'>")
                 .append("           <button class='bto-accordion'>" + item.name + "</button>")
                 .append("           <ul id='list'>");
 
