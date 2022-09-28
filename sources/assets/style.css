@@ -1,0 +1,296 @@
+@font-face {
+    font-family: 'Etna';
+    src: url('./fonts/subset-Etna.woff2') format('woff2'),
+        url('./fonts/subset-Etna.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aaux ProRegular OSF';
+    src: url('./fonts/subset-AauxProRegularOSF.woff2') format('woff2'),
+        url('./fonts/subset-AauxProRegularOSF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Aaux ProBold OSF';
+    src: url('./fonts/subset-AauxProBoldOSF.woff2') format('woff2'),
+        url('./fonts/subset-AauxProBoldOSF.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    text-decoration: none;
+}
+
+:root {
+    color: #231f20;
+}
+
+ul,
+li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: fixed;
+    max-height: 100vh;
+    top: 0;
+    padding-top: 24px;
+    padding-right: 48px;
+    right: 0;
+    row-gap: 24px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/**
+* Toggle button
+*/
+.menu__toggle__trigger {
+    display: block;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.menu__toggle__trigger > hr {
+    position: relative;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 3px;
+    border-radius: 3px;
+    border: 0;
+    outline: 0;
+    background-color: #ffffff;
+    transition: opacity 0.4s ease, transform 0.4s ease, top 0.4s ease;
+}
+
+.menu__toggle__trigger > hr:nth-child(2) {
+    margin: 6px 0;
+}
+
+.menu__toggle__state:checked + .menu__toggle__trigger > hr:nth-child(1) {
+    transform: rotate(45deg);
+    top: 9px;
+}
+
+.menu__toggle__state:checked + .menu__toggle__trigger > hr:nth-child(2) {
+    opacity: 0;
+}
+
+.menu__toggle__state:checked + .menu__toggle__trigger > hr:nth-child(3) {
+    transform: rotate(-45deg);
+    top: -9px;
+}
+
+/**
+* Menu items
+*/
+.menu__list {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding-bottom: 72px;
+}
+
+.menu__list__item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: content-box;
+}
+
+.menu__list__item__trigger {
+    position: relative;
+    width: 100%;
+    padding: 24px 96px 22px 80px;
+    font-family: 'Etna';
+    font-size: 1.8rem;
+    box-sizing: border-box;
+    user-select: none;
+    cursor: pointer;
+}
+
+.menu__list__item__trigger::after {
+    position: absolute;
+    margin: auto 0;
+    top: -4px;
+    right: 24px;
+    bottom: 0;
+    display: inline-block;
+    height: 12px;
+    width: 16px;
+    transform: rotate(180deg);
+    transition: transform 0.4s ease;
+}
+
+.menu__list__item__trigger::after,
+.menu__list__item__list__item__label--trigger::after {
+    content: '';
+    background: url('./img/ico-arrow.svg') center center no-repeat;
+    background-size: contain;
+}
+
+.menu__list__item__state:checked + .menu__list__item__trigger::after {
+    transform: rotate(0deg);
+}
+
+.menu__list__item__list {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.menu__list__item__list__item {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.menu__list__item__list__item:last-of-type {
+    margin-bottom: 32px;
+}
+
+.menu__list__item__list__item__label {
+    color: inherit;
+    text-decoration: none;
+    font-family: 'Aaux ProRegular OSF';
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+    cursor: pointer;
+}
+
+.menu__list__item__list__item__label:not(.menu__list__item__list__item__label--trigger):hover {
+    text-decoration: underline;
+}
+
+.menu__list__item__list__item__label--trigger {
+    font-weight: bold;
+}
+
+.menu__list__item__list__item__label--trigger::after {
+    position: relative;
+    left: 5px;
+    top: -1px;
+    height: 10px;
+    width: 12px;
+    display: inline-block;
+    transform: rotate(180deg);
+    transition: transform 0.4s ease;
+}
+
+.menu__list__item__list__item__state:checked
+    + .menu__list__item__list__item__label--trigger::after {
+    transform: rotate(0deg);
+}
+
+.menu__list__item__list__item__label--trigger + .menu__list__item__list {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.menu__list__item__list__item__label--trigger
+    + .menu__list__item__list
+    .menu__list__item__list__item {
+    margin-top: 16px;
+    margin-bottom: 0;
+}
+
+/**
+ * Animations
+ */
+.slide-left-on-toggle > * {
+    transform: translateX(125%);
+    transition: transform 0.6s ease;
+}
+
+.slide-down-on-toggle {
+    height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: height 0.6s ease;
+}
+
+.slide-down-on-toggle > * {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+@media screen and (max-width: 600px) {
+    .menu {
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        padding-left: 3%;
+        padding-right: 3%;
+        width: 100%;
+    }
+
+    .menu__list {
+        row-gap: 8px;
+    }
+
+    .menu__list__item__trigger {
+        font-size: 1rem;
+        padding: 16px 36px 14px 24px;
+    }
+
+    .menu__list__item__trigger::after {
+        top: 0;
+        right: 16px;
+        height: 10px;
+        width: 12px;
+    }
+
+    .menu__list__item__list__item__label--trigger::after {
+        height: 8px;
+        width: 10px;
+    }
+
+    .menu__list__item__list__item {
+        margin-bottom: 8px;
+    }
+
+    .menu__list__item__list__item__label--trigger
+        + .menu__list__item__list
+        .menu__list__item__list__item {
+        margin-top: 8px;
+    }
+
+    .menu__list__item__list__item__label {
+        font-size: 0.9rem;
+    }
+}

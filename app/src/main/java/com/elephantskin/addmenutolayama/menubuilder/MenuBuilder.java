@@ -3,8 +3,6 @@ package com.elephantskin.addmenutolayama.menubuilder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
@@ -16,7 +14,7 @@ import com.elephantskin.addmenutolayama.menuconfig.MenuConfigDTO;
 
 public class MenuBuilder {
     
-    private final String menuPathName = "menu";
+    private final String menuPathName = "assets";
     private final String menuHtmlIdValue = "sidenav";
     
     private MenuConfigDTO configDTO;
@@ -34,14 +32,14 @@ public class MenuBuilder {
 
     public void build() throws IOException {
         copyMenuModelFilesToProjectPath();
-        buildHtml();
+        this.html = MenuHtmlBuilder.build(this.configDTO).getHtml();
         injectMenuHtmlOnIndexFile();
     }
 
     private void copyMenuModelFilesToProjectPath() throws IOException {
         System.out.println("> Copiando arquivos do modelo para o projeto...");
         
-        final File menuModelDir = new File(App.jarLocation + "/sources/menumodel");
+        final File menuModelDir = new File(App.jarLocation + "/sources/assets");
         if (!menuModelDir.isDirectory()) throw new IOException("O diretório do modelo de menu não existe: " + menuModelDir.getAbsolutePath());
 
         File destinationDir = new File(projectPath + this.menuPathName);
@@ -49,79 +47,6 @@ public class MenuBuilder {
         
         destinationDir.mkdir();
         FileUtils.copyDirectory(menuModelDir, destinationDir);
-    }
-
-    private void buildHtml() {
-        System.out.println("> Gerando código HTML do menu...");
-        String menuButtonHtml = buildMenuButtonHtml();
-        String menuHtml = buildMenuHtml();
-        String cssAndJs = buildCssAndJs();
-
-        this.html = "<div id='" + this.menuHtmlIdValue + "'>" 
-                        + menuButtonHtml 
-                        + menuHtml 
-                        + cssAndJs 
-                  + "</div>";
-    }
-
-    private String buildMenuButtonHtml() {
-        StringBuilder html = new StringBuilder()
-            .append("<div id='tdbotaomenu' onclick='openNav()'>")
-            .append("   <img id='imgButton' src='./menu/img/button_01.gif' />")
-            .append("</div>");
-
-        return html.toString();
-    }
-
-    private String buildMenuHtml() {
-        List<String> menuClassList = new ArrayList<String>();
-        menuClassList.add("tdmenu");
-        if (this.configDTO.watermark) menuClassList.add("with-watermark");
-
-        StringBuilder html = new StringBuilder()
-            .append("<div class='" + String.join(" ", menuClassList) + "'>")
-            .append("   <nav class='navbar'>")
-            .append("       <ul>");
-        
-        List<String> itemMenuClassList = new ArrayList<String>();
-        itemMenuClassList.add("itemmenu");
-        if (this.configDTO.opened) itemMenuClassList.add("opened");
-
-        final String itemMenuClasses = String.join(" ", itemMenuClassList);
-        for (MenuConfigDTO.MenuConfigItem item : this.configDTO.itemList) {
-            html.append("       <li class='" + itemMenuClasses + "'>")
-                .append("           <button class='bto-accordion'>" + item.name + "</button>")
-                .append("           <ul id='list'>");
-
-            for (MenuConfigDTO.MenuConfigItem.MenuConfigItemSubItem subItem : item.subItemList) {
-                String link = "";
-                if (item.url != null) link += item.url;
-                if (subItem.cameraName != null) link += "?camera=" + subItem.cameraName;
-
-                html.append("           <li>")
-                    .append("               <a href='"+ link + "'>")
-                    .append(                    subItem.name)
-                    .append("               </a>")
-                    .append("           </li>");
-            }
-
-            html.append("           </ul>")
-                .append("       </li>");
-
-        }
-        html.append("       </ul>")
-            .append("   </nav>")
-            .append("</div>");
-
-        return html.toString();
-    }
-
-    private String buildCssAndJs() {
-        StringBuilder html = new StringBuilder()
-            .append("<link rel='stylesheet' href='./menu/menulateral.css' />")
-            .append("<script src='./menu/menulateral.js'></script>");
-
-        return html.toString();
     }
 
     private void injectMenuHtmlOnIndexFile() throws IOException {

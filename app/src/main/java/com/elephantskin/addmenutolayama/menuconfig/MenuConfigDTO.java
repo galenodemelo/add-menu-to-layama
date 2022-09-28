@@ -6,8 +6,10 @@ import javax.annotation.Nullable;
 
 public class MenuConfigDTO {
     
+    @Deprecated
     public Boolean opened = false;
 
+    @Deprecated
     public Boolean watermark = true;
 
     public List<MenuConfigItem> itemList;
@@ -27,6 +29,9 @@ public class MenuConfigDTO {
 
             @Nullable
             public String cameraName;
+
+            @Nullable
+            public List<MenuConfigItemSubItem> subItemList;
         }
     }
 }
