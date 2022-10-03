@@ -60,8 +60,7 @@ li {
     padding-right: 48px;
     right: 0;
     row-gap: 24px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     box-sizing: border-box;
 }
 

@@ -43,9 +43,10 @@ function IndexController() {
     const toggleMenu = function (stateElement) {
         stateElement.disabled = true
         const isOpened = stateElement.checked
-        const xPosition = isOpened ? '0%' : '125%'
 
-        const menu = stateElement.parentElement.querySelector(
+        const wrapper = stateElement.parentElement
+        wrapper.style.overflowY = isOpened ? 'auto' : 'hidden'
+        const menu = wrapper.querySelector(
             '.slide-left-on-toggle'
         )
 
@@ -55,6 +56,7 @@ function IndexController() {
             hideAllExcept(null)
         }
 
+        const xPosition = isOpened ? '0%' : '125%'
         elementList.forEach(function (element, index) {
             setTimeout(function () {
                 element.style.transform = `translate(${xPosition})`
