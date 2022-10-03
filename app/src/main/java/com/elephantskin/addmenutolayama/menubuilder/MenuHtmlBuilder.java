@@ -1,5 +1,6 @@
 package com.elephantskin.addmenutolayama.menubuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,8 +64,12 @@ public class MenuHtmlBuilder {
     private void addMenuTitle(MenuConfigItem menuConfigItem) {
         String uuid = UUID.randomUUID().toString();
 
+        List<String> stateAttributeList = new ArrayList<String>();
+        stateAttributeList.add("id='" + uuid + "'");
+        if (this.configDTO.opened) stateAttributeList.add("checked");
+
         this.html.append("<li class='menu__list__item'>");
-        this.html.append("    <input type='checkbox' class='menu__list__item__state hide js-menu-item-state-first-level' id='" + uuid + "' />");
+        this.html.append("    <input type='checkbox' class='menu__list__item__state hide js-menu-item-state-first-level' " + String.join(" ", stateAttributeList) + " />");
         this.html.append("    <label for='" + uuid + "' class='menu__list__item__trigger'>");
         this.html.append(menuConfigItem.name);
         this.html.append("    </label>");

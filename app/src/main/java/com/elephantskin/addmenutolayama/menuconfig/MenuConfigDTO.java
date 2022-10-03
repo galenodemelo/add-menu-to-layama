@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 public class MenuConfigDTO {
     
-    @Deprecated
     public Boolean opened = false;
 
     @Deprecated

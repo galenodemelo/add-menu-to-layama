@@ -9,6 +9,7 @@ function IndexController() {
 
     this.init = function () {
         bind()
+        openAllFirstLevelMenuIfNecessary()
     }
 
     const bind = function () {
@@ -37,6 +38,13 @@ function IndexController() {
                 },
                 { passive: true }
             )
+        })
+    }
+
+    const openAllFirstLevelMenuIfNecessary = function () {
+        firstLevelMenuItemStateList.forEach(function (item) {
+            if (!item.checked) return;
+            toggleSubmenu(item, true)
         })
     }
 
