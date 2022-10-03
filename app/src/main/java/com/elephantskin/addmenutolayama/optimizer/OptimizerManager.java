@@ -146,9 +146,9 @@ public class OptimizerManager {
         headElement.append("<link rel=\"preload\" href=\"./bjs/" + this.compressedJsFilename + "\" as=\"script\" />");
 
         List<String> fontNameList = Arrays.asList("subset-Etna.woff2", "subset-Etna.woff",
-                "subset-AauxProMedium.woff2", "subset-AauxProMedium.woff");
+                "subset-AauxProRegularOSF.woff2", "subset-AauxProRegularOSF.woff", "subset-AauxProBoldOSF.woff2", "subset-AauxProBoldOSF.woff");
         for (String fontName : fontNameList) {
-            headElement.append("<link rel=\"preload\" href=\"./menu/font/" + fontName + "\" as=\"font\" />");
+            headElement.append("<link rel=\"preload\" href=\"./assets/fonts/" + fontName + "\" as=\"font\" />");
         }
 
         FileUtils.write(indexFile, indexFileManager.html(), StandardCharsets.UTF_8);

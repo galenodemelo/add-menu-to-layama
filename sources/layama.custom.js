@@ -1,15 +1,15 @@
 /**
  * Altera a câmera ao clicar no botão do menu
  */
- function refreshCamera() {
-    if (abriu) openNav() // Fecha o menu se estiver aberto
-
+function refreshCamera() {
     const camera = new URLSearchParams(window.location.search).get('camera')
     let cameraList = getLayamaCameras()
-    cameraList.sort(function(x, y) { 
-        return x.a == camera ? -1 : y.a == camera ? 1 : 0 
+    cameraList.sort(function (x, y) {
+        return x.a == camera ? -1 : y.a == camera ? 1 : 0
     })
-    getLayamaCameras = function() { return cameraList }
+    getLayamaCameras = function () {
+        return cameraList
+    }
 }
 
 refreshCamera()
@@ -17,11 +17,11 @@ refreshCamera()
 /**
  * Disponibiliza imagens com tamanho um pouco acima do tamanho da janela
  */
-getLayamaResolutions = function() { 
+getLayamaResolutions = function () {
     const resolutionList = [1024, 1440, 1680, 2048]
     const windowWidth = window.innerWidth
 
-    const layamaResolutions = new BABYLON.SmartArray(0);
+    const layamaResolutions = new BABYLON.SmartArray(0)
     for (resolution of resolutionList) {
         if (resolution >= windowWidth) {
             layamaResolutions.push(resolution)
@@ -35,5 +35,5 @@ getLayamaResolutions = function() {
         layamaResolutions.push(2048)
     }
 
-    return layamaResolutions 
+    return layamaResolutions
 }
