@@ -14,19 +14,28 @@ public class MenuHtmlBuilder {
 
     private MenuConfigDTO configDTO;
 
-    private MenuHtmlBuilder(MenuConfigDTO configDTO) {
+    private String sidenavId;
+
+    private String menuStateId;
+
+    private String menuStateTriggerId;
+
+    private MenuHtmlBuilder(MenuConfigDTO configDTO, String sidenavId, String menuStateId, String menuStateTriggerId) {
         this.configDTO = configDTO;
+        this.sidenavId = sidenavId;
+        this.menuStateId = menuStateId;
+        this.menuStateTriggerId = menuStateTriggerId;
     }
 
-    public static MenuHtmlBuilder build(MenuConfigDTO configDTO) {
+    public static MenuHtmlBuilder build(MenuConfigDTO configDTO, String sidenavId, String menuStateId, String menuStateTriggerId) {
         System.out.println("> Gerando código HTML do menu...");
-        return new MenuHtmlBuilder(configDTO).build();
+        return new MenuHtmlBuilder(configDTO, sidenavId, menuStateId, menuStateTriggerId).build();
     }
 
     public MenuHtmlBuilder build() {
-        this.html.append("<nav class='menu' id='sidenav'>");
         this.addCss();
         this.addMenuButton();
+        this.html.append("<nav class='menu js-menu-wrapper' id='" + this.sidenavId + "'>");
         this.addMenuLinks();
         this.addJs();
         this.html.append("</nav>");
@@ -43,8 +52,8 @@ public class MenuHtmlBuilder {
     }
 
     private void addMenuButton() {
-        this.html.append("<input type='checkbox' value='1' id='menu-state' class='menu__toggle__state hide js-menu-state' />");
-        this.html.append("<label for='menu-state' class='menu__toggle__trigger' title='Open menu'>");
+        this.html.append("<input type='checkbox' value='1' id='" + this.menuStateId + "' class='menu__toggle__state hide js-menu-state' />");
+        this.html.append("<label for='" + this.menuStateId + "' id='" + this.menuStateTriggerId + "' class='menu__toggle__trigger' title='Open menu'>");
         this.html.append("    <hr />");
         this.html.append("    <hr />");
         this.html.append("    <hr />");
@@ -87,7 +96,7 @@ public class MenuHtmlBuilder {
     }
 
     private void addMenuSubItem(MenuConfigItemSubItem subItem, String baseUrl) {
-        if (baseUrl.equals(null)) baseUrl = "";
+        if (baseUrl == null) baseUrl = "";
         Boolean hasSubItems = subItem.subItemList != null;
 
         this.html.append("<li class='menu__list__item__list__item'>");

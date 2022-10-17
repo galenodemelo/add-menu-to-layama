@@ -52,13 +52,14 @@ function IndexController() {
         stateElement.disabled = true
         const isOpened = stateElement.checked
 
-        const wrapper = stateElement.parentElement
+        const wrapper = stateElement.parentElement.querySelector('.js-menu-wrapper')
         wrapper.style.overflowY = isOpened ? 'auto' : 'hidden'
         const menu = wrapper.querySelector(
             '.slide-left-on-toggle'
         )
 
         const elementList = Array.from(menu.children)
+        elementList.unshift(wrapper)
         if (!isOpened) {
             elementList.reverse()
             hideAllExcept(null)

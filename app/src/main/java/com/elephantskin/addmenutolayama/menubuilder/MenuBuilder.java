@@ -15,7 +15,9 @@ import com.elephantskin.addmenutolayama.menuconfig.MenuConfigDTO;
 public class MenuBuilder {
     
     private final String menuPathName = "assets";
-    private final String menuHtmlIdValue = "sidenav";
+    private final String sidenavId = "sidenav";
+    private final String menuStateId = "menu-state";
+    private final String menuStateTriggerId = "menu-state-trigger";
     
     private MenuConfigDTO configDTO;
     private String projectPath;
@@ -32,7 +34,7 @@ public class MenuBuilder {
 
     public void build() throws IOException {
         copyMenuModelFilesToProjectPath();
-        this.html = MenuHtmlBuilder.build(this.configDTO).getHtml();
+        this.html = MenuHtmlBuilder.build(this.configDTO, sidenavId, menuStateId, menuStateTriggerId).getHtml();
         injectMenuHtmlOnIndexFile();
     }
 
@@ -56,13 +58,23 @@ public class MenuBuilder {
         String indexHtmlContent = FileUtils.readFileToString(indexFile, StandardCharsets.UTF_8);
         
         Document indexFileManager = Jsoup.parse(indexHtmlContent);
-        Element menuHtmlElement = indexFileManager.getElementById(this.menuHtmlIdValue);
-        if (menuHtmlElement != null) menuHtmlElement.remove();
+        removeItemsFromPreviousBuild(indexFileManager);
 
         Element elementToAppendMenu = indexFileManager.getElementById("canvasZone");
         if (elementToAppendMenu == null) throw new IOException("O elemento canvasZone não foi encontrado no arquivo index.html");
 
         elementToAppendMenu.append(this.html);
         FileUtils.write(indexFile, indexFileManager.html(), StandardCharsets.UTF_8);
+    }
+
+    private void removeItemsFromPreviousBuild(Document indexFileManager) {
+        Element sidenavElement = indexFileManager.getElementById(this.sidenavId);
+        if (sidenavElement != null) sidenavElement.remove();
+
+        Element menuStateElement = indexFileManager.getElementById(this.menuStateId);
+        if (menuStateElement != null) menuStateElement.remove();
+
+        Element menuStateTriggerElement = indexFileManager.getElementById(this.menuStateTriggerId);
+        if (menuStateTriggerElement != null) menuStateTriggerElement.remove();
     }
 }
