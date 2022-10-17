@@ -137,6 +137,19 @@ li {
     box-sizing: content-box;
 }
 
+.menu__list__item.disclaimer {
+    max-width: fit-content;
+    text-align: right;
+    background: none;
+    font-family: "Aaux ProRegular OSF";
+    font-size: 75%;
+    color: #ffffff;
+    line-height: 1.4;
+    justify-content: flex-end;
+    flex: 1 1 0;
+    margin-bottom: -54px;
+}
+
 .menu__list__item__trigger {
     position: relative;
     width: 100%;
@@ -285,6 +298,10 @@ li {
 
     .menu__list {
         row-gap: 8px;
+    }
+
+    .menu__list__item.disclaimer {
+        margin-bottom: 16px;
     }
 
     .menu__list__item__list__item__label--trigger::after {
